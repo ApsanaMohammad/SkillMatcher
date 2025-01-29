@@ -71,6 +71,4 @@ skill-matcher/
 2. Make changes and commit with proper messages.
 3. Create a pull request with details about the changes.
 
-## License
-This project is licensed under the MIT License.
 
