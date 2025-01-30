@@ -1,29 +1,28 @@
 import sqlite3
 
 def init_db():
-    conn = sqlite3.connect("database.db")
-    cursor = conn.cursor()
+    conn = sqlite3.connect('app_database.db')
+    cursor = conn.cursor()  # Initialize cursor here
 
-    # Create jobs table
+    # Create jobs table if it doesn't exist
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS jobs (
-        id INTEGER PRIMARY KEY,
-        title TEXT,
-        description TEXT
-    )
+        CREATE TABLE IF NOT EXISTS jobs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            description TEXT NOT NULL
+        );
     """)
 
-    # Create applicants table
+    # Create job_applications table if it doesn't exist
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS applicants (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        resume TEXT,
-        job_id INTEGER,
-        matching_score REAL,
-        experience INTEGER,
-        FOREIGN KEY(job_id) REFERENCES jobs(id)
-    )
+        CREATE TABLE IF NOT EXISTS job_applications (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            job_id INTEGER NOT NULL,
+            applicant_name TEXT NOT NULL,
+            resume_text TEXT,
+            matching_score REAL NOT NULL,
+            FOREIGN KEY (job_id) REFERENCES jobs(id)
+        );
     """)
 
     conn.commit()
